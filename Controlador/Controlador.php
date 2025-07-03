@@ -36,11 +36,7 @@ class Controlador
         $gestionproducto = new GestorProducto();
         $producto = new Producto($nomprod, $especificaiones, $marca, $modelo, $precio, $category);
         $nuevoProd = $gestionproducto->ingresarProducto($producto);
-        if ($nuevoProd) {
-            echo "<script>alert('Error al registrar producto');window.location='index.php?accion=panelAdmin'</script>";
-        } else {
-            echo "<script>alert('Producto registrado con exito');window.location='index.php?accion=panelAdmin'</script>";
-        }
+        return $nuevoProd;
     }
     public function nuevoProductoImg($cover, $id_producto)
     {
@@ -48,9 +44,10 @@ class Controlador
         $productoImg = new imagenesProducto($cover, $id_producto);
         $nuevoProdImg = $gestionproducto->ingresarProductoImg($productoImg);
         if ($nuevoProdImg) {
-            echo "<script>alert('Error al registrar imagen del producto');window.location='index.php?accion=panelAdmin'</script>";
+            echo "<script>alert('Producto registrado con exito');window.location='index.php?accion=panelAdmin'</script>";
         } else {
-            echo "<script>alert('Imagen del producto registrada con exito');window.location='index.php?accion=panelAdmin'</script>";
+            echo "<script>alert('Error al registrar producto');window.location='index.php?accion=panelAdmin'</script>";
+            
         }
     }
 

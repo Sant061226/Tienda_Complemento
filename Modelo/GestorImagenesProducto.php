@@ -10,6 +10,7 @@ class GestorImagenesProducto{
         $conexion->consulta($sql);
         $filasAfectadas = $conexion->obtenerFilasAfectadas();
         $conexion->cerrar();
+        return $filasAfectadas;
     }
     public function obtenerUltimoId()
     {

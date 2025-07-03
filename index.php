@@ -80,8 +80,8 @@ if (isset($_GET["accion"])) {
             $id_producto = $controlador->nuevoProducto($nombre, $especificacion, $precio, $marca, $modelo, $categoria);
 
             // Guardar las imágenes asociadas a ese producto
-            foreach ($nombres_archivos as $file) {
-                $controlador->nuevoProductoImg( $file, $id_producto);
+            foreach ($nombres_archivos as $cover) {
+                $controlador->nuevoProductoImg($cover, $id_producto);
             }
 
             break;

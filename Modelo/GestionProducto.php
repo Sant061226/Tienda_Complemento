@@ -6,15 +6,14 @@ class GestorProducto
         $conexion = new Conexion();
         $conexion->abrir();
         $nombre = $producto->obtenerNombre();
-        $esp= $producto->obtenerEspicifaciones();
+        $especificaciones = $producto->obtenerEspicificaciones();
         $marca = $producto->obtenerMarca();
         $modelo = $producto->obtenerModelo();
         $precio = $producto->obtenerPrecio();
         $categoria = $producto->obtenerCategoria();
-        $sql = "INSERT INTO productos VALUES (NULL, '$nombre', '$esp', '$marca', $modelo, '$precio','$categoria')";
+        $sql = "INSERT INTO productos (nombre, especificaciones, marca, modelo, precio, id_categoria) VALUES ('$nombre', '$especificaciones', '$marca', '$modelo', '$precio', '$categoria')";
         $conexion->consulta($sql);
         $idInsertado = $conexion->obtenerInsertId();
-        $filasAfectadas = $conexion->obtenerFilasAfectadas();
         $conexion->cerrar();
         return $idInsertado;
     }
