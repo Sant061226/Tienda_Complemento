@@ -18,6 +18,7 @@ $filas = $conexion->obtenerFilasAfectadas();
                 <th>Cantidad</th>
                 <th>Fecha</th>
                 <th>Estado</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <?php while ($fila = $result->fetch_assoc()) {
@@ -30,6 +31,8 @@ $filas = $conexion->obtenerFilasAfectadas();
                     <td><?php echo $fila["cantidad"] ?></td>
                     <td><?php echo $fila["fecha"] ?></td>
                     <td><?php echo $fila["estado"] ?></td>
+                    <td> <button><a href="index.php?accion=editEstado&id=<?php echo $fila["id"] ?>"> Cambiar estado </button>
+                    </td>
                 </tr>
             </tbody>
         <?php } ?>

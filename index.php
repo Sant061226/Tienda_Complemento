@@ -82,21 +82,24 @@ if (isset($_GET["accion"])) {
             break;
         case "compraSimulada":
             $controlador->compraSimulada(
-                $_POST["idusuario"], 
-                $_POST["idproducto"], 
-                $_POST["cantiped"], 
-                $_POST["fechaped"]);
+                $_POST["idusuario"],
+                $_POST["idproducto"],
+                $_POST["cantiped"],
+                $_POST["fechaped"]
+            );
             break;
         case "editCat":
             $controlador->editarCategoria(
-                $_POST["idcat"], 
-                $_POST["editnomcat"]);
+                $_POST["idcat"],
+                $_POST["editnomcat"]
+            );
             break;
         case "regUsuario":
             $controlador->registroUsuario(
-                $_POST["nombre"], 
-                $_POST["correo"], 
-                $_POST["contrasena"]);
+                $_POST["nombre"],
+                $_POST["correo"],
+                $_POST["contrasena"]
+            );
             break;
         case "editarProd":
             $ruta_indexphp = "upload";
@@ -129,6 +132,12 @@ if (isset($_GET["accion"])) {
                 $_POST["idpro"]
             );
             break;
+        case "editEst":
+            $controlador->editarEstado(
+                $_POST["idped"],
+                $_POST["nuevEst"],
+            );
+            break;
     }
     if ($_GET['accion'] == 'eliminarProducto' && isset($_GET['id'])) {
         $controlador->eliminarProducto($_GET["id"]);
@@ -138,6 +147,8 @@ if (isset($_GET["accion"])) {
         header('Location: index.php?accion=panelAdmin');
     } elseif ($_GET['accion'] == 'editProducto' && isset($_GET['id'])) {
         $controlador->edit($_GET['id']);
+    } elseif ($_GET['accion'] == 'editEstado' && isset($_GET['id'])) {
+        $controlador->editEsta($_GET['id']);
     } elseif ($_GET['accion'] == 'editCategoria' && isset($_GET['id'])) {
         $controlador->editCat($_GET['id']);
     } elseif ($_GET['accion'] == 'comprarProd' && isset($_GET['id'])) {

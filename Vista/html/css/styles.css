@@ -107,7 +107,13 @@ footer {
   margin-top: 1rem;
 }
 .navbar button {
-  margin-bottom: 1rem;;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+.navbar button.active {
+  background-color: aqua;
+  margin-bottom: 1rem;
   padding: 0.5rem;
   font-size: 1rem;
 }

@@ -96,6 +96,25 @@ class Controlador
         require_once "Vista/html/editarProducto.php";
     }
 
+    // Carga la vista de edición de Estado Pedido
+    public function editEsta($id)
+    {
+        $gestionPedido = new GestorPedido();
+        $result = $gestionPedido->edit($id);
+        require_once "Vista/html/editarEstado.php";
+    }
+
+    public function editarEstado($idped, $editEst)
+    {
+        $gestionpedido = new GestorPedido();
+        $filasAfectadas = $gestionpedido->editarPedido($idped, $editEst);
+        if ($filasAfectadas > 0) {
+            echo "<script>alert('Estado editado con éxito');window.location='index.php?accion=panelAdmin2'</script>";
+        } else {
+            echo "<script>alert('Error al editar el estado');window.location='index.php?accion=panelAdmin2'</script>";
+        }
+    }
+
     // Carga la vista de edición de categoría
     public function editcat($id)
     {
