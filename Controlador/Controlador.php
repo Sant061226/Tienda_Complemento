@@ -128,7 +128,7 @@ class Controlador
     {
         $gestionproducto = new GestorProducto();
         $result = $gestionproducto->show($id);
-        require_once "Vista/html/simcomp.php";
+        require_once "Vista/html/registro.php";
     }
 
     // Elimina un producto
