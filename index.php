@@ -26,6 +26,12 @@ if (isset($_GET["accion"])) {
             $_POST["password"];
             $controlador->inicioSesion($_POST["email"], $_POST["password"]);
             break;
+        case "logCliente":
+            $_POST["emailCli"];
+            $_POST["passwordCli"];
+            $_POST["rol"];
+            $controlador->inicioSesionCli($_POST["emailCli"], $_POST["passwordCli"], $_POST["rol"]);
+            break;
         case "cerrarSesion":
             $controlador->cerrarSesion();
             break;
@@ -37,6 +43,9 @@ if (isset($_GET["accion"])) {
             break;
         case "catalogo":
             $controlador->verPagina("Vista/html/catalogo.php");
+            break;
+        case "pedidosClientes":
+            $controlador->verPagina("Vista/html/pedidosClientes.php");
             break;
         case "panelAdmin":
             $controlador->verPagina("Vista/html/panelAdmin1.php");
@@ -139,7 +148,11 @@ if (isset($_GET["accion"])) {
             );
             break;
     }
-    if ($_GET['accion'] == 'eliminarProducto' && isset($_GET['id'])) {
+    if (isset($_POST['producto_a_comprar'])) {
+        $_SESSION['producto_a_comprar'] = $_POST['producto_a_comprar'];
+        header("Location: index.php?accion=catalogo");
+        exit();
+    } elseif ($_GET['accion'] == 'eliminarProducto' && isset($_GET['id'])) {
         $controlador->eliminarProducto($_GET["id"]);
         header('Location: index.php?accion=panelAdmin');
     } elseif ($_GET['accion'] == 'eliminarCategoria' && isset($_GET['id'])) {

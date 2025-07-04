@@ -23,6 +23,22 @@ class Controlador
             echo "<script>alert('Correo o contraseña incorrecta');window.location='index.php?accion=logAdmin'</script>";
         }
     }
+    public function inicioSesionCli($email, $password, $rol)
+    {
+        $gestionusuario = new GestorSesion();
+        $sesion = new Sesion($email, $password);
+        $usuario = $gestionusuario->iniciarSesionCli($sesion, $rol);
+        if ($usuario) {
+            $_SESSION["idusuario"] = $usuario->id;
+            $_SESSION["usuario"] = ($usuario->nombre);
+            $_SESSION["correo"] = ($usuario->correo);
+            $_SESSION["rol"] = ($usuario->rol);
+            header("Location: index.php?accion=catalogo");
+            exit();
+        } else {
+            echo "<script>alert('Correo o contraseña incorrecta');window.location='index.php?accion=catalogo'</script>";
+        }
+    }
 
     // Cierra la sesión actual
     public function cerrarSesion()
@@ -128,7 +144,7 @@ class Controlador
     {
         $gestionproducto = new GestorProducto();
         $result = $gestionproducto->show($id);
-        require_once "Vista/html/registro.php";
+        require_once "Vista/html/simcomp.php";
     }
 
     // Elimina un producto
@@ -161,11 +177,14 @@ class Controlador
     // Simula la compra de un producto
     public function compraSimulada($idusuario, $idproducto, $fechaped, $cantiped)
     {
+        if (!$idusuario && isset($_SESSION['idusuario'])) {
+            $idusuario = $_SESSION['idusuario'];
+        }
         $gestionpedido = new GestorPedido();
         $pedido = new Pedido($idusuario, $idproducto, $cantiped, $fechaped);
         $nuevoPed = $gestionpedido->ingresarPedido($pedido);
         if ($nuevoPed) {
-            echo "<script>alert('Error al registrar el pedido');window.location='index.php?accion=catalogo'</script>";
+            echo "<script>alert('Error al cargar el pedido');window.location='index.php?accion=catalogo'</script>";
         } else {
             echo "<script>alert('Pedido registrado con exito');window.location='index.php?accion=catalogo'</script>";
         }
