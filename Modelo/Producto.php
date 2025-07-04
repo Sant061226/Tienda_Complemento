@@ -25,7 +25,7 @@ class Producto
     {
         return $this->nombre;
     }
-    public function obtenerEspicifaciones()
+    public function obtenerEspicificaciones()
     {
         return $this->espicifaciones;
     }

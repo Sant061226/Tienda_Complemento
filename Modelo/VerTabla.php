@@ -28,7 +28,7 @@ $filas = $conexion->obtenerFilasAfectadas();
             <tbody>
                 <tr>
                     <td><?php echo $fila["id"] ?></td>
-                    <td><img src="upload/<?php echo $fila["imagenes"]?>" width="80%"></td>
+                    <td><img src="upload/<?php echo $fila["imagenes"]?>" width="90%"></td>
                     <td><?php echo $fila["nombre"] ?></td>
                     <td><?php echo $fila["especificaciones"] ?></td>
                     <th><?php echo $fila["marca"]?></th>

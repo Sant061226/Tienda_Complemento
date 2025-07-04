@@ -8,7 +8,8 @@ class GestorUsuario
             $nombre = $usuario->obtenerNombre();
             $correo = $usuario->obtenerCorreo();
             $contrasena = $usuario->obtenerContrasena();
-            $sql = "INSERT INTO usuarios (id, nombre, correo, contrasena, rol) VALUES (NULL, '$nombre', '$correo', '$contrasena', 2)";
+            $hash = password_hash($contrasena, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO usuarios (id, nombre, correo, contrasena, rol) VALUES (NULL, '$nombre', '$correo', '$hash', 2)";
             $conexion->consulta($sql);
             $filasAfectadas = $conexion->obtenerFilasAfectadas();
             $conexion->cerrar();

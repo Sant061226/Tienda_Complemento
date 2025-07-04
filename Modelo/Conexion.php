@@ -5,6 +5,7 @@ class Conexion
     private $sql;
     private $result;
     private $filasAfectadas;
+    private $id;
 
     public function abrir()
     {
@@ -25,6 +26,8 @@ class Conexion
         $this->sql = $this->mySQLI->query($this->sql);
         $this->result = $this->sql;
         $this->filasAfectadas = $this->mySQLI->affected_rows;
+        $this->id = $this->mySQLI->insert_id;
+        
     }
     public function obtenerFilasAfectadas()
     {
@@ -33,5 +36,10 @@ class Conexion
     public function obtenerResult()
     {
         return $this->result;
+    }
+
+    public function obtenerInsertId()
+    {
+        return $this->id;
     }
 }

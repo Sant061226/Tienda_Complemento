@@ -8,11 +8,11 @@ class Controlador
     }
 
     // Inicia sesión de administrador
-    public function inicioSesion($email, $password)
+    public function inicioSesion($email, $password, $rol)
     {
         $gestionusuario = new GestorSesion();
         $sesion = new Sesion($email, $password);
-        $usuario = $gestionusuario->iniciarSesion($sesion);
+        $usuario = $gestionusuario->iniciarSesion($sesion, $rol);
         if ($usuario) {
             $_SESSION["usuario"] = ($usuario->nombre);
             $_SESSION["correo"] = ($usuario->correo);
@@ -23,11 +23,11 @@ class Controlador
             echo "<script>alert('Correo o contraseña incorrecta');window.location='index.php?accion=logAdmin'</script>";
         }
     }
-    public function inicioSesionCli($email, $password, $rol)
+    public function inicioSesionCli($email, $password, $rolCli)
     {
         $gestionusuario = new GestorSesion();
         $sesion = new Sesion($email, $password);
-        $usuario = $gestionusuario->iniciarSesionCli($sesion, $rol);
+        $usuario = $gestionusuario->iniciarSesionCli($sesion, $rolCli);
         if ($usuario) {
             $_SESSION["idusuario"] = $usuario->id;
             $_SESSION["usuario"] = ($usuario->nombre);
@@ -59,23 +59,17 @@ class Controlador
         $gestionproducto = new GestorProducto();
         $producto = new Producto($nomprod, $especificaiones, $marca, $modelo, $precio, $category);
         $nuevoProd = $gestionproducto->ingresarProducto($producto);
-        if ($nuevoProd) {
-            echo "<script>alert('Error al registrar producto');window.location='index.php?accion=panelAdmin'</script>";
-        } else {
-            echo "<script>alert('Producto registrado con exito');window.location='index.php?accion=panelAdmin'</script>";
-        }
+        return $nuevoProd;
     }
-
-    // Registra la imagen de un producto
     public function nuevoProductoImg($cover, $id_producto)
     {
         $gestionproducto = new GestorImagenesProducto();
         $productoImg = new imagenesProducto($cover, $id_producto);
         $nuevoProdImg = $gestionproducto->ingresarProductoImg($productoImg);
         if ($nuevoProdImg) {
-            echo "<script>alert('Error al registrar imagen del producto');window.location='index.php?accion=panelAdmin'</script>";
+            echo "<script>alert('Producto registrado con exito');window.location='index.php?accion=panelAdmin'</script>";
         } else {
-            echo "<script>alert('Imagen del producto registrada con exito');window.location='index.php?accion=panelAdmin'</script>";
+            echo "<script>alert('Error al registrar producto');window.location='index.php?accion=panelAdmin'</script>";
         }
     }
 
@@ -84,12 +78,7 @@ class Controlador
     {
         $gestionproducto = new GestorImagenesProducto();
         $productoImg = new imagenesProducto($cover, $idpro);
-        $nuevoProdImg = $gestionproducto->ingresarProductoImg($productoImg);
-        if ($nuevoProdImg) {
-            echo "<script>alert('Error al registrar imagen del producto');window.location='index.php?accion=panelAdmin'</script>";
-        } else {
-            echo "<script>alert('Imagen del producto registrada con exito');window.location='index.php?accion=panelAdmin'</script>";
-        }
+        $gestionproducto->ingresarProductoImg($productoImg);
     }
 
     // Edita un producto existente
@@ -175,7 +164,7 @@ class Controlador
     }
 
     // Simula la compra de un producto
-    public function compraSimulada($idusuario, $idproducto, $fechaped, $cantiped)
+    public function compraSimulada($idusuario, $idproducto, $cantiped, $fechaped, )
     {
         if (!$idusuario && isset($_SESSION['idusuario'])) {
             $idusuario = $_SESSION['idusuario'];
@@ -213,5 +202,10 @@ class Controlador
         } else {
             echo "<script>alert('Usuario registrado con exito');window.location='index.php?accion=catalogo'</script>";
         }
+    }
+    public function obtenerUltimoId()
+    {
+        $gestionproducto = new GestorImagenesProducto();
+        return $gestionproducto->obtenerUltimoId();
     }
 }
