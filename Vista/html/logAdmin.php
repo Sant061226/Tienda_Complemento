@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda de Tenis</title>
     <link rel="stylesheet" href="Vista/html/css/styles.css">
+    <script src="Vista/jquery/jquery.js"></script>
+    <script src="Vista/js/script.js"></script>
 </head>
 
 <body>
@@ -16,6 +17,7 @@
             <a href="index.php?accion=inicio">Inicio</a>
             <a href="index.php?accion=catalogo">Catálogo</a>
             <a href="index.php?accion=logAdmin">Zona Admin</a>
+            <a href="#" id="abrirModalCliente">Iniciar Sesión Cliente</a>
         </nav>
     </header>
     <section id="admin" class="adminsty">
@@ -24,8 +26,24 @@
         <form action="index.php?accion=inAdmin" method="post">
             <input type="email" name="email" placeholder="Correo">
             <input type="password" name="password" placeholder="Contraseña">
+            <input type="hidden" name="rol" value="1">
             <button type="submit">Ingresar</button>
         </form>
+    </section>
+    <section id="admin" class="adminsty">
+        <div id="modalCliente" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close" id="cerrarModalCliente">&times;</span>
+                <h2>Bienvenido</h2>
+                <form action="index.php?accion=logCliente" method="post">
+                    <input type="email" name="emailCli" placeholder="Correo" required>
+                    <input type="password" name="passwordCli" placeholder="Contraseña" required>
+                    <input type="hidden" name="rolCli" value="2">
+                    <button type="submit">Ingresar</button>
+                    <p><strong>¿No esta regitradado? <a href="index.php?accion=registrar">presione aqui!</a> </strong></p>
+                </form>
+            </div>
+        </div>
     </section>
     <footer>
         <p>&copy; 2025 Tienda de Tenis. Todos los derechos reservados.</p>

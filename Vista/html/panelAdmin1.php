@@ -26,32 +26,9 @@
             <h3>Productos</h3>
             <div id="tablaprod">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Categoría</th>
-                            <th>Precio</th>
-                            <th>Talla</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Tenis Modelo X</td>
-                            <td>Deportivos</td>
-                            <td>$180.000</td>
-                            <td>42</td>
-                            <td>
-                                <button>Editar</button>
-                                <button>Eliminar</button>
-                            </td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
-             <form action="index.php?accion=nuevoProd" class="form-admin" method="post" enctype="multipart/form-data">
+            <form action="index.php?accion=nuevoProd" class="form-admin" method="post" enctype="multipart/form-data">
                 <h3>Registrar Nuevos Productos</h3>
                 <input type="text" name="id_producto" placeholder="ID del producto" required>
                 <input type="text" name="nomprod" placeholder="Nombre del producto" required>
@@ -65,7 +42,7 @@
                         <option value="">Seleccionar categoría</option>
                     </select>
                 </div>
-                <input type="file" name="cover" multiple>
+                <input type="file" name="cover[]" multiple>
                 <input type="hidden" name="id_producto" value="1">
                 <button type="submit">Guardar Producto</button>
             </form>

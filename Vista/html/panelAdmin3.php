@@ -24,26 +24,7 @@
         <h3>Pedidos</h3>
         <div id="tebped">
             <table>
-                <thead>
-                    <tr>
-                        <th>ID Pedido</th>
-                        <th>Cliente</th>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>101</td>
-                        <td>Juan Pérez</td>
-                        <td>Tenis Modelo X</td>
-                        <td>2</td>
-                        <td>2025-06-27</td>
-                        <td>Pendiente</td>
-                    </tr>
-                </tbody>
+                
             </table>
         </div>
     </div>

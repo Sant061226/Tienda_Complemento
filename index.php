@@ -24,7 +24,14 @@ if (isset($_GET["accion"])) {
         case "inAdmin":
             $_POST["email"];
             $_POST["password"];
-            $controlador->inicioSesion($_POST["email"], $_POST["password"]);
+            $_POST["rol"];
+            $controlador->inicioSesion($_POST["email"], $_POST["password"], $_POST["rol"]);
+            break;
+        case "logCliente":
+            $_POST["emailCli"];
+            $_POST["passwordCli"];
+            $_POST["rolCli"];
+            $controlador->inicioSesionCli($_POST["emailCli"], $_POST["passwordCli"], $_POST["rol"]);
             break;
         case "cerrarSesion":
             $controlador->cerrarSesion();
@@ -38,6 +45,9 @@ if (isset($_GET["accion"])) {
         case "catalogo":
             $controlador->verPagina("Vista/html/catalogo.php");
             break;
+        case "pedidosClientes":
+            $controlador->verPagina("Vista/html/pedidosClientes.php");
+            break;
         case "panelAdmin":
             $controlador->verPagina("Vista/html/panelAdmin1.php");
             break;
@@ -49,33 +59,41 @@ if (isset($_GET["accion"])) {
             break;
         case "nuevoProd":
             $ruta_indexphp = "upload";
-            $extensiones = array(0 => 'image/jpg', 1 => 'image/jpeg', 2 => 'image/png');
+            $extensiones = array('image/jpg', 'image/jpeg', 'image/png');
             $max_tamanyo = 1024 * 1024 * 8;
-            $cover = $_FILES['cover']['name'];
-            $ruta_fichero_origen = $_FILES['cover']['tmp_name'];
-            $ruta_nuevo_destino = $ruta_indexphp . '/' . $_FILES['cover']['name'];
-            if (in_array($_FILES['cover']['type'], $extensiones)) {
-                echo 'Es una imagen';
-                if ($_FILES['cover']['size'] < $max_tamanyo) {
-                    echo 'Pesa menos de 1 MB';
-                    if (move_uploaded_file($ruta_fichero_origen, $ruta_nuevo_destino)) {
-                        echo 'Fichero guardado con éxito';
+
+            $nombres_archivos = array();
+
+            foreach ($_FILES['cover']['name'] as $key => $nombre_archivo) {
+                $tipo = $_FILES['cover']['type'][$key];
+                $tamano = $_FILES['cover']['size'][$key];
+                $tmp_name = $_FILES['cover']['tmp_name'][$key];
+
+                if (in_array($tipo, $extensiones) && $tamano < $max_tamanyo) {
+                    $nombre_archivo_final = time() . '_' . basename($nombre_archivo);
+                    $ruta_nuevo_destino = $ruta_indexphp . '/' . $nombre_archivo_final;
+
+                    if (move_uploaded_file($tmp_name, $ruta_nuevo_destino)) {
+                        $nombres_archivos[] = $nombre_archivo_final;
                     }
                 }
             }
-            $controlador->nuevoProducto(
-                $_POST["nomprod"],
-                $_POST["especificaiones"],
-                $_POST["marca"],
-                $_POST["modelo"],
-                $_POST["precio"],
-                $_POST["category"]
 
-            );
-            $controlador->nuevoProductoImg(
-                $cover,
-                $_POST["id_producto"]
-            );
+            $nombre = $_POST["nomprod"];
+            $especificacion = $_POST["especificaiones"];
+            $precio = $_POST["precio"];
+            $marca = $_POST["marca"];
+            $modelo = $_POST["modelo"];
+            $categoria = $_POST["category"];
+
+
+            $id_producto = $controlador->nuevoProducto($nombre, $especificacion, $marca, $modelo, $precio, $categoria);
+
+            // Guardar las imágenes asociadas a ese producto
+            foreach ($nombres_archivos as $cover) {
+                $controlador->nuevoProductoImg($cover, $id_producto);
+            }
+
             break;
         case 'nuevaCat':
             $controlador->ingresarCategoria($_POST["nomcat"]);
@@ -103,20 +121,29 @@ if (isset($_GET["accion"])) {
             break;
         case "editarProd":
             $ruta_indexphp = "upload";
-            $extensiones = array(0 => 'image/jpg', 1 => 'image/jpeg', 2 => 'image/png');
+            $extensiones = array('image/jpg', 'image/jpeg', 'image/png');
             $max_tamanyo = 1024 * 1024 * 8;
-            $edcover = $_FILES['editcover']['name'];
-            $ruta_fichero_origen = $_FILES['editcover']['tmp_name'];
-            $ruta_nuevo_destino = $ruta_indexphp . '/' . $_FILES['editcover']['name'];
-            if (in_array($_FILES['editcover']['type'], $extensiones)) {
-                echo 'Es una imagen';
-                if ($_FILES['editcover']['size'] < $max_tamanyo) {
-                    echo 'Pesa menos de 1 MB';
-                    if (move_uploaded_file($ruta_fichero_origen, $ruta_nuevo_destino)) {
-                        echo 'Fichero guardado con éxito';
+            $nombres_archivos = array();
+
+            // Procesar nuevas imágenes si se subieron
+            if (!empty($_FILES['editcover']['name'][0])) {
+                foreach ($_FILES['editcover']['name'] as $key => $nombre_archivo) {
+                    $tipo = $_FILES['editcover']['type'][$key];
+                    $tamano = $_FILES['editcover']['size'][$key];
+                    $tmp_name = $_FILES['editcover']['tmp_name'][$key];
+
+                    if (in_array($tipo, $extensiones) && $tamano < $max_tamanyo) {
+                        $nombre_archivo_final = time() . '_' . basename($nombre_archivo);
+                        $ruta_nuevo_destino = $ruta_indexphp . '/' . $nombre_archivo_final;
+
+                        if (move_uploaded_file($tmp_name, $ruta_nuevo_destino)) {
+                            $nombres_archivos[] = $nombre_archivo_final;
+                        }
                     }
                 }
             }
+
+            // Editar datos del producto
             $controlador->editarProducto(
                 $_POST["idprod"],
                 $_POST["editnom"],
@@ -124,13 +151,16 @@ if (isset($_GET["accion"])) {
                 $_POST["editmarca"],
                 $_POST["editmodelo"],
                 $_POST["editprecio"],
-                $_POST["category"],
-                $edcover
+                $_POST["category"]
             );
-            $controlador->editProductoImg(
-                $cover,
-                $_POST["idpro"]
-            );
+
+            // Si hay nuevas imágenes, guárdalas en la base de datos
+            if (!empty($nombres_archivos)) {
+                foreach ($nombres_archivos as $cover) {
+                    $controlador->editProductoImg($cover, $_POST["idprod"]);
+                }
+            }
+
             break;
         case "editEst":
             $controlador->editarEstado(
@@ -139,7 +169,11 @@ if (isset($_GET["accion"])) {
             );
             break;
     }
-    if ($_GET['accion'] == 'eliminarProducto' && isset($_GET['id'])) {
+    if (isset($_POST['producto_a_comprar'])) {
+        $_SESSION['producto_a_comprar'] = $_POST['producto_a_comprar'];
+        header("Location: index.php?accion=catalogo");
+        exit();
+    } elseif ($_GET['accion'] == 'eliminarProducto' && isset($_GET['id'])) {
         $controlador->eliminarProducto($_GET["id"]);
         header('Location: index.php?accion=panelAdmin');
     } elseif ($_GET['accion'] == 'eliminarCategoria' && isset($_GET['id'])) {

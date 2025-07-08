@@ -24,36 +24,7 @@
         <h3>Categorías</h3>
         <div id="tabcat">
             <table>
-                <thead>
-                    <tr>
-                        <th>Categorias</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <ul>
-                            <td>
-                                <li>Deportivos</li>
-                            </td>
-                            <td>
-                                <li><button>Eliminar</button>
-                            </td>
-                        </ul>
-
-                    </tr>
-                    <tr>
-                        <ul>
-                            <td>
-                                <li>Casuales</li>
-                            </td>
-                            <td>
-                                <li><button>Eliminar</button>
-                            </td>
-                        </ul>
-
-                    </tr>
-                </tbody>
+              
             </table>
         </div>
         <h3>Nueva Categoría</h3>
