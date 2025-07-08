@@ -8,28 +8,26 @@
     <link rel="stylesheet" href="Vista/html/css/styles.css">
     <script src="Vista/jquery/jquery.js"></script>
     <script src="Vista/js/script.js"></script>
+    
 </head>
 
 <body>
     <header>
         <h1>Tienda de Tenis</h1>
         <nav>
-            <a href="index.php?accion=panelAdmin">Productos</a>
-            <a href="index.php?accion=panelAdmin1">Categorias</a>
-            <a href="index.php?accion=panelAdmin2">Pedidos</a>
-            <a href="index.php?accion=cerrarSesion">Cerrar Sesión</a>
+            <a href="index.php?accion=inicio">Inicio</a>
+            <a href="index.php?accion=catalogo">Catálogo</a>
+            <a href="index.php?accion=logAdmin">Zona Admin</a>
         </nav>
     </header>
-    <div class="admin-section">
-        <h3>Pedidos</h3>
-        <div id="tebped">
-            <table>
-                
-            </table>
-        </div>
-    </div>
-    </section>
 
+    <section id="catalogo">
+        <h2 class="h2">Catálogo de Productos</h2>
+
+        <div id="detalle-producto">
+
+        </div>
+    </section>
     <footer>
         <p>&copy; 2025 Tienda de Tenis. Todos los derechos reservados.</p>
     </footer>

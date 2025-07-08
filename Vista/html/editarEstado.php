@@ -20,24 +20,22 @@
             <a href="index.php?accion=cerrarSesion">Cerrar Sesión</a>
         </nav>
     </header>
-    <div class="admin-section">
-        <h3>Categorías</h3>
-        <div id="tabcat">
-            <table>
-              
-            </table>
-        </div>
-        <h3>Nueva Categoría</h3>
-        <form action="index.php?accion=nuevaCat" class="form-admin" method="post">
-            <input type="text" name="nomcat" placeholder="Nombre de la categoría">
-            <button type="submit">Guardar Categoría</button>
+    <?php
+    $fila = $result->fetch_assoc();
+    ?>
+    <section id="admin" class="adminsty">
+        <h3>Editar Categoría</h3>
+        <form action="index.php?accion=editEst" class="form-admin" method="post">
+            <input type="hidden" name="idped" value="<?php echo  $fila['id'] ?>">
+            <select name="nuevEst">
+                <option value="solicitado">Solicitado</option>
+                <option value="enviado">Enviado</option>
+                <option value="entregado">Entregado</option>
+                <option value="cancelado">Cancelado</option>
+            </select>
+            <button type="submit">Guardar Producto</button>
         </form>
-    </div>
     </section>
-
-    <footer>
-        <p>&copy; 2025 Tienda de Tenis. Todos los derechos reservados.</p>
-    </footer>
 </body>
 
 </html>

@@ -39,8 +39,7 @@ session_start();
                         <?php if (count($imagenes) > 1): ?>
                             <div class="carousel" data-prod="<?php echo $id_prod; ?>">
                                 <?php foreach ($imagenes as $idx => $img): ?>
-                                    <img src="upload/<?php echo $img; ?>" class="carousel-img"
-                                        style="display:<?php echo $idx == 0 ? '' : 'none'; ?>;" width="50%" alt="">
+                                    <img src="upload/<?php echo $img; ?>" class="carousel-img" style="display:<?php echo $idx == 0 ? '' : 'none'; ?>;" width="50%" alt="">
                                 <?php endforeach; ?>
                                 <button class="prev" type="button">&#10094;</button>
                                 <button class="next" type="button">&#10095;</button>
@@ -57,12 +56,7 @@ session_start();
                             </form>
                         <?php } else { ?>
                             <form>
-                                <button type="button" disabled style="background:#ccc;cursor:not-allowed;">Inicia sesión para
-                                    comprar</button>
-                            </form>
-                            <form action="index.php?accion=detalle" method="post">
-                                <input type="hidden" name="id" value="<?php echo $fila['id']; ?>">
-                                <button type="submit">Ver Detalle</button>
+                                <button type="button" disabled style="background:#ccc;cursor:not-allowed;">Inicia sesión para comprar</button>
                             </form>
                         <?php } ?>
                         <div id="compra"></div>

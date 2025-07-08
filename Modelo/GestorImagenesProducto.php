@@ -1,5 +1,6 @@
 <?php
-class GestorImagenesProducto{
+class GestorImagenesProducto
+{
     public function ingresarProductoImg(imagenesProducto $productoImg)
     {
         $conexion = new Conexion();
@@ -22,7 +23,4 @@ class GestorImagenesProducto{
         $conexion->cerrar();
         return $result[0]['ultimo_id'];
     }
-
 }
-
-?>

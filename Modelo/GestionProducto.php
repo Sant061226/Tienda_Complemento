@@ -29,17 +29,17 @@ class GestorProducto
     {
         $Conexion = new Conexion();
         $Conexion->abrir();
-        $sql = "SELECT productos.id, productos.nombre, productos.descripcion, productos.precio, productos.imagen, categorias.nombre as Categoria from productos join categorias on productos.id_categoria=categorias.id WHERE productos.id = $id";
+        $sql = "SELECT productos.id, productos.nombre, productos.especificaciones, productos.marca, productos.modelo, productos.precio, categorias.nombre as Categoria from productos join categorias on productos.id_categoria=categorias.id WHERE productos.id = $id";
         $Conexion->consulta($sql);
         $result = $Conexion->obtenerResult();
         $Conexion->cerrar();
         return $result;
     }
-    public function editarProducto($idprod, $editnom, $editprecio, $edittalla, $category, $edcover)
+    public function editarProducto($idprod, $editnom, $editespeci, $editmarca, $editmodelo, $editprecio, $category)
     {
         $conexion = new Conexion();
         $conexion->abrir();
-        $sql = "UPDATE productos SET nombre='$editnom', descripcion='$edittalla', precio='$editprecio', imagen='$edcover', id_categoria='$category' WHERE productos.id = $idprod";
+        $sql = "UPDATE productos SET nombre='$editnom', especificaciones='$editespeci', marca='$editmarca', modelo='$editmodelo', precio='$editprecio', id_categoria='$category' WHERE productos.id = $idprod";
         $conexion->consulta($sql);
         $filasAfectadas = $conexion->obtenerFilasAfectadas();
         $conexion->cerrar();
@@ -49,7 +49,7 @@ class GestorProducto
     {
         $Conexion = new Conexion();
         $Conexion->abrir();
-        $sql = "SELECT productos.id, productos.nombre, productos.descripcion, productos.precio, productos.imagen, categorias.nombre as Categoria from productos join categorias on productos.id_categoria=categorias.id WHERE productos.id = $id";
+        $sql = "SELECT productos.id, productos.nombre, productos.especificaciones, productos.marca, productos.modelo, productos.modelo, productos.precio, categorias.nombre as Categoria from productos join categorias on productos.id_categoria=categorias.id WHERE productos.id = $id";
         $Conexion->consulta($sql);
         $result = $Conexion->obtenerResult();
         $Conexion->cerrar();
