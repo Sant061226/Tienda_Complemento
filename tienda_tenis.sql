@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-07-2025 a las 00:00:53
+-- Tiempo de generación: 08-07-2025 a las 19:30:48
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,55 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `tienda_tenis`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `carritos`
+--
+
+CREATE TABLE `carritos` (
+  `id` int(11) NOT NULL,
+  `usuario_id` int(11) DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT current_timestamp(),
+  `estado` enum('pendiente','finalizado') DEFAULT 'pendiente'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `carritos`
+--
+
+INSERT INTO `carritos` (`id`, `usuario_id`, `fecha_creacion`, `estado`) VALUES
+(3, NULL, '2025-07-08 06:54:21', ''),
+(4, NULL, '2025-07-08 19:15:58', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `carrito_items`
+--
+
+CREATE TABLE `carrito_items` (
+  `id` int(11) NOT NULL,
+  `carrito_id` int(11) NOT NULL,
+  `producto_id` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precio_unitario` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `carrito_items`
+--
+
+INSERT INTO `carrito_items` (`id`, `carrito_id`, `producto_id`, `cantidad`, `precio_unitario`) VALUES
+(1, 3, 1, 1, 2400000.00),
+(2, 3, 1, 1, 2400000.00),
+(3, 4, 1, 1, 2400000.00),
+(4, 4, 1, 1, 2400000.00),
+(5, 4, 1, 1, 2400000.00),
+(6, 4, 1, 1, 2400000.00),
+(7, 4, 13, 1, 2500000.00),
+(8, 4, 14, 1, 30000.00);
 
 -- --------------------------------------------------------
 
@@ -150,6 +199,21 @@ INSERT INTO `usuarios` (`id`, `nombre`, `correo`, `contrasena`, `rol`) VALUES
 --
 
 --
+-- Indices de la tabla `carritos`
+--
+ALTER TABLE `carritos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usuario_id` (`usuario_id`);
+
+--
+-- Indices de la tabla `carrito_items`
+--
+ALTER TABLE `carrito_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `carrito_id` (`carrito_id`),
+  ADD KEY `producto_id` (`producto_id`);
+
+--
 -- Indices de la tabla `categorias`
 --
 ALTER TABLE `categorias`
@@ -188,6 +252,18 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `carritos`
+--
+ALTER TABLE `carritos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `carrito_items`
+--
+ALTER TABLE `carrito_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
@@ -220,6 +296,19 @@ ALTER TABLE `usuarios`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `carritos`
+--
+ALTER TABLE `carritos`
+  ADD CONSTRAINT `carritos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
+
+--
+-- Filtros para la tabla `carrito_items`
+--
+ALTER TABLE `carrito_items`
+  ADD CONSTRAINT `carrito_items_ibfk_1` FOREIGN KEY (`carrito_id`) REFERENCES `carritos` (`id`),
+  ADD CONSTRAINT `carrito_items_ibfk_2` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`);
 
 --
 -- Filtros para la tabla `imagenes_producto`
